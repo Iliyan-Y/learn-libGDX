@@ -20,16 +20,19 @@ public class MainMenuScreen implements Screen {
 
   public MainMenuScreen(final Drop game) {
     this.game = game;
+
     camera = new OrthographicCamera();
     camera.setToOrtho(false, 800, 480);
 
     label = new Label("Player name", game.skin, "default");
-    label.setPosition(340, 275);
-    label.setSize(120, 25);
+    label.setPosition(game.width / 2 - label.getWidth() / 2,
+        Gdx.graphics.getHeight() / 1.5f);
+    label.setFontScale(game.scale);
 
     textField = new TextField("", game.skin);
-    textField.setPosition(325, 250);
-    textField.setSize(130, 25);
+    textField.setSize(game.width / 6, game.height / 12);
+    textField.setPosition(game.width / 1.8f - textField.getWidth() / 2 ,game.height /1.8f);
+    textField.getStyle().font.setColor(1f,0,0,1f);
     textField.setTextFieldListener(new TextField.TextFieldListener() {
       @Override
       public void keyTyped(TextField textField, char key) {
@@ -39,7 +42,7 @@ public class MainMenuScreen implements Screen {
 
     button = new TextButton("Play", game.skin, "default");
     button.setSize(60, 60);
-    button.setPosition(350, 178);
+    button.setPosition(game.width / 1.9f - button.getWidth() / 2 ,game.height /3f);
     button.addListener(new InputListener() {
       @Override
       public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -47,11 +50,13 @@ public class MainMenuScreen implements Screen {
         return true;
       }
     });
+    button.setTransform(true);
+    button.setScale(game.scale);
+
 
     game.stage.addActor(textField);
     game.stage.addActor(label);
     game.stage.addActor(button);
-    Gdx.input.setInputProcessor(game.stage);
   }
 
   @Override
@@ -66,7 +71,8 @@ public class MainMenuScreen implements Screen {
     game.batch.setProjectionMatrix(camera.combined);
 
     game.batch.begin();
-    game.font.draw(game.batch, "Welcome to DROP !", 100, 150);
+    game.font.getData().setScale(game.scale);
+    game.font.draw(game.batch, "Welcome to DROP !", game.width / 4, 150);
     game.stage.act(Gdx.graphics.getDeltaTime());
     game.stage.draw();
     game.batch.end();

@@ -59,6 +59,7 @@ public class GameScreen implements Screen {
     touchPos = new Vector3();
     raindrops = new Array<Rectangle>();
     spawnRaindrop();
+    game.font.getData().setScale(game.scale / 2 );
 
   }
 
@@ -86,8 +87,8 @@ public class GameScreen implements Screen {
     game.batch.setProjectionMatrix(camera.combined);
 
     game.batch.begin();
-    game.font.draw(game.batch, "Game is Paused !", 400, 220);
-    game.font.draw(game.batch, "Tap anywhere to begin!", 100, 100);
+    game.font.draw(game.batch, "Game is Paused !", game.width /2 , 220);
+    game.font.draw(game.batch, "Tap anywhere to begin!", game.width /2, 100);
     game.batch.end();
     if (Gdx.input.isTouched()) {
       this.state = State.Running;
@@ -104,8 +105,8 @@ public class GameScreen implements Screen {
 
     game.batch.begin();
     // show drops collected
-    game.font.draw(game.batch, "Drops collected: " + dropsGathered, 0, 465);
-    game.font.draw(game.batch, playerName, 0, 480);
+    game.font.draw(game.batch, "Drops collected: " + dropsGathered, 10, 440 );
+    game.font.draw(game.batch, playerName, 10, 462);
     //display the bucket
     game.batch.draw(bucketImage, bucket.x, bucket.y);
     // render the drops

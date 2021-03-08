@@ -30,6 +30,7 @@ public class GameScreen implements Screen {
   private Array<Rectangle> raindrops;
   private long lastDropTime; //store time in nanosec
   int dropsGathered;
+  String playerName;
 
   public enum State {
     Running, Paused
@@ -37,9 +38,9 @@ public class GameScreen implements Screen {
 
   State state = State.Running;
 
-  public GameScreen(final Drop game) {
+  public GameScreen(final Drop game, String playerName) {
     this.game = game;
-
+    this.playerName = playerName;
     dropImage = new Texture(Gdx.files.internal("drop.png"));
     bucketImage = new Texture(Gdx.files.internal("bucket.png"));
     dropSound = Gdx.audio.newSound(Gdx.files.internal("waterdrop.wav"));
@@ -103,7 +104,8 @@ public class GameScreen implements Screen {
 
     game.batch.begin();
     // show drops collected
-    game.font.draw(game.batch, "Drops collected: " + dropsGathered, 0, 480);
+    game.font.draw(game.batch, "Drops collected: " + dropsGathered, 0, 465);
+    game.font.draw(game.batch, playerName, 0, 480);
     //display the bucket
     game.batch.draw(bucketImage, bucket.x, bucket.y);
     // render the drops

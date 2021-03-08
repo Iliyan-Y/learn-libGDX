@@ -13,37 +13,36 @@ public class MainMenuScreen implements Screen {
   final Drop game;
   OrthographicCamera camera;
   TextField textField;
-  Skin skin;
   Label label;
   Button button;
   boolean play = false;
-  String playerName;
+  String playerName = "Player";
 
   public MainMenuScreen(final Drop game) {
     this.game = game;
     camera = new OrthographicCamera();
     camera.setToOrtho(false, 800, 480);
-    skin = new Skin(Gdx.files.internal("uiskin.json"));
 
-    label = new Label("Player name", skin,"default");
+    label = new Label("Player name", game.skin, "default");
     label.setPosition(340, 275);
     label.setSize(120, 25);
 
-    textField = new TextField("", skin);
-    textField.setPosition(325,250);
+    textField = new TextField("", game.skin);
+    textField.setPosition(325, 250);
     textField.setSize(130, 25);
     textField.setTextFieldListener(new TextField.TextFieldListener() {
       @Override
       public void keyTyped(TextField textField, char key) {
         playerName = textField.getText();
-      }});
+      }
+    });
 
-    button = new TextButton("Play", skin, "default");
-    button.setSize(60,60);
-    button.setPosition(350, 178 );
-    button.addListener(new InputListener(){
+    button = new TextButton("Play", game.skin, "default");
+    button.setSize(60, 60);
+    button.setPosition(350, 178);
+    button.addListener(new InputListener() {
       @Override
-      public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+      public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
         play = true;
         return true;
       }
@@ -72,7 +71,7 @@ public class MainMenuScreen implements Screen {
     game.stage.draw();
     game.batch.end();
 
-    if(play) {
+    if (play) {
       game.setScreen(new GameScreen(game, playerName));
       dispose();
     }
@@ -100,7 +99,6 @@ public class MainMenuScreen implements Screen {
 
   @Override
   public void dispose() {
-      skin.dispose();
   }
 
 }
